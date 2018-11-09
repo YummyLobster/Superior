@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 
 import com.example.lobster.superior.model.ItemClickListener;
-import com.example.lobster.superior.model.News;
+import com.example.lobster.superior.model.Markets;
 
 
 import java.util.ArrayList;
@@ -41,17 +41,17 @@ class RecyclerViewHolder extends RecyclerView.ViewHolder implements View.OnClick
     }
 }
 
-public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsHolder>{
+public class MarketsAdapter extends RecyclerView.Adapter<MarketsAdapter.NewsHolder>{
     Context mContext;
-    ArrayList<News> mNews;
+    ArrayList<Markets> mMarkets;
 
-    public NewsAdapter(Context context, ArrayList<News> news){
+    public MarketsAdapter(Context context, ArrayList<Markets> markets){
         this.mContext = context;
-        this.mNews = news;
+        this.mMarkets = markets;
     }
 
     @Override
-    public NewsAdapter.NewsHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public MarketsAdapter.NewsHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
         boolean shouldAttachToParentImmediately = false;
@@ -62,42 +62,42 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsHolder>{
     }
 
     @Override
-    public void onBindViewHolder(NewsAdapter.NewsHolder holder, int position) {
+    public void onBindViewHolder(MarketsAdapter.NewsHolder holder, int position) {
         holder.bind(position);
     }
 
     @Override
     public int getItemCount() {
-        return mNews.size();
+        return mMarkets.size();
     }
 
     class NewsHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        TextView title;
-        TextView description;
-        TextView publishedAt;
+        TextView name;
+        TextView price;
+        TextView market;
 
         public NewsHolder(View itemView) {
             super(itemView);
-            title = (TextView) itemView.findViewById(R.id.title);
-            description = (TextView)itemView.findViewById(R.id.description);
-            publishedAt = (TextView) itemView.findViewById(R.id.publishedAt);
+            name = (TextView) itemView.findViewById(R.id.title);
+            price = (TextView)itemView.findViewById(R.id.description);
+            market = (TextView) itemView.findViewById(R.id.publishedAt);
             itemView.setOnClickListener(this);
         }
 
         void bind(int listIndex) {
-            title.setText(mNews.get(listIndex).getTitle());
-            description.setText(mNews.get(listIndex).getDescription());
-            publishedAt.setText(mNews.get(listIndex).getPublishedAt());
+            name.setText("Name: "+mMarkets.get(listIndex).getName());
+            price.setText("Price: "+mMarkets.get(listIndex).getPrice());
+            market.setText("Market: "+mMarkets.get(listIndex).getMarket());
 
         }
 
         @Override
         public void onClick(View v) {
-            String url = mNews.get(getAdapterPosition()).getUrl();
-
-            Intent i = new Intent(Intent.ACTION_VIEW);
-            i.setData(Uri.parse(url));
-            mContext.startActivity(i);
+//            String url = mMarket.get(getAdapterPosition()).getUrl();
+//
+//            Intent i = new Intent(Intent.ACTION_VIEW);
+//            i.setData(Uri.parse(url));
+//            mContext.startActivity(i);
         }
     }
 

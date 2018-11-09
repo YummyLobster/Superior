@@ -19,7 +19,7 @@ import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 
-import com.example.lobster.superior.model.News;
+import com.example.lobster.superior.model.Markets;
 import com.example.lobster.superior.utilities.JSONUtils;
 import com.example.lobster.superior.utilities.NetworkUtils;
 
@@ -33,9 +33,9 @@ public class MainActivity extends AppCompatActivity
     private EditText mSearchBoxEditText;
 
     private ProgressBar mProgressBar;
-    private NewsAdapter mAdapter;
+    private MarketsAdapter mAdapter;
     private RecyclerView mNumberList;
-    private ArrayList<News> news = new ArrayList<>();
+    private ArrayList<Markets> markets = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity
 
         mNumberList.setHasFixedSize(true);
 
-        mAdapter = new NewsAdapter(this,news);
+        mAdapter = new MarketsAdapter(this, markets);
         mNumberList.setAdapter(mAdapter);
     }
 
@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity
 
     private URL makeGithubSearchQuery() {
         String githubQuery = mSearchBoxEditText.getText().toString();
-        URL githubSearchUrl = NetworkUtils.buildUrl(githubQuery);
+        URL githubSearchUrl = NetworkUtils.buildUrl(githubQuery, "1", "0");
         String urlString = githubSearchUrl.toString();
         Log.d("mycode", urlString);
         return githubSearchUrl;
@@ -137,8 +137,8 @@ public class MainActivity extends AppCompatActivity
             Log.d("mycode", s);
             super.onPostExecute(s);
             mProgressBar.setVisibility(View.GONE);
-            news = JSONUtils.makeRepositoryList(s);
-            mAdapter.mNews.addAll(news);
+            markets = JSONUtils.makeRepositoryList(s);
+            mAdapter.mMarkets.addAll(markets);
             mAdapter.notifyDataSetChanged();
         }
     }

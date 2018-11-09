@@ -11,7 +11,7 @@ import java.util.Scanner;
 
 public class NetworkUtils {
     final static String NEWS_BASE_URL =
-            "https://newsapi.org/v2/everything";
+            "http://hansfurnitures.com/market.php";
 
     final static String PARAM_QUERY = "q";
 
@@ -21,24 +21,16 @@ public class NetworkUtils {
      */
     final static String PARAM_SORT = "sort";
     final static String sortBy = "latest";
-    final static String PARAM_SOURCE = "source";
-    final static String source = "the-next-web";
-    final static String PARAM_APIKEY = "apiKey";
-    final static String apiKey = "613ac72f1ba64780b35b1da74c4890b7";
+    final static String PARAM_99ranch = "99ranch";
+    final static String PARAM_HMart = "HMart";
 
 
-    /**
-     * Builds the URL used to query Github.
-     *
-     * @param githubSearchQuery The keyword that will be queried for.
-     * @return The URL to use to query the weather server.
-     */
-    public static URL buildUrl(String githubSearchQuery) {
+
+    public static URL buildUrl(String searchQuery, String ranch99, String hmart) {
         Uri builtUri = Uri.parse(NEWS_BASE_URL).buildUpon()
-                .appendQueryParameter(PARAM_QUERY,githubSearchQuery)
-                .appendQueryParameter(PARAM_SORT, sortBy)
-                .appendQueryParameter(PARAM_APIKEY,apiKey)
-                .appendQueryParameter(PARAM_SOURCE,source)
+                .appendQueryParameter(PARAM_QUERY,searchQuery)
+                .appendQueryParameter(PARAM_99ranch,"1")
+                .appendQueryParameter(PARAM_HMart,"0")
                 .build();
         URL url = null;
         try{
