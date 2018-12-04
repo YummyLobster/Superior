@@ -1,12 +1,16 @@
 package com.example.lobster.superior.model;
 
 public class Markets {
+    private long id;
     private String name;
     private String price;
     private String category;
     private String image;
     private String market;
-    public Markets(String name, String price, String category, String image, String market) {
+    public Markets(){
+    }
+    public Markets(long id,String name, String price, String category, String image, String market) {
+        this.id=id;
         this.name = name;
         this.price = price;
         this.category = category;
@@ -14,6 +18,12 @@ public class Markets {
         this.market = market;
     }
 
+    public void setId(long id){
+        this.id=id;
+    }
+    public long getId(){
+        return this.id;
+    }
     public String getName() {
         return name;
     }

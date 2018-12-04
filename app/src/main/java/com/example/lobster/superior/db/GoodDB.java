@@ -1,71 +1,153 @@
 package com.example.lobster.superior.db;
 
+import java.util.ArrayList;
+import java.util.List;
 import android.content.ContentValues;
+import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.example.lobster.superior.model.Markets;
+
+// 資料功能類別
 public class GoodDB {
-    private static String DATABASE_TABLE = "goods";
+    // 表格名稱
+    public static final String TABLE_NAME = "shoppinglist";
+    // 編號表格欄位名稱，固定不變
+    public static final String KEY_ID = "_id";
+    // 其它表格欄位名稱
+    public static final String NAME_COLUMN = "name";
+    public static final String PRICE_COLUMN = "price";
+    public static final String CATEGORY_COLUMN = "category";
+    public static final String IMAGE_COLUMN = "image";
+    public static final String MARKET_COLUMN = "market";
+    // 使用上面宣告的變數建立表格的SQL指令
+    public static final String CREATE_TABLE =
+            "CREATE TABLE " + TABLE_NAME + " (" +
+                    KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    NAME_COLUMN + " TEXT NOT NULL, " +
+                    PRICE_COLUMN + " INTEGER NOT NULL, " +
+                    CATEGORY_COLUMN + " TEXT NOT NULL, " +
+                    IMAGE_COLUMN + " TEXT NOT NULL, " +
+                    MARKET_COLUMN + " TEXT NOT NULL)";
+    // 資料庫物件
     private SQLiteDatabase db;
-    private DBHelper dbHelper;
-    // Button元件的事件處理 - 插入記錄
-    public void btn1_Click(int _id,String name, int price, String category, String image, String market) {
-        long id;
+    // 建構子，一般的應用都不需要修改
+    public GoodDB(Context context){
+        db = DBHelper.getDatabase(context);
+    }
+    // 關閉資料庫，一般的應用都不需要修改
+    public void close() {
+        db.close();
+    }
+    // 新增參數指定的物件
+    public Markets insert(Markets item) {
+        // 建立準備新增資料的ContentValues物件
         ContentValues cv = new ContentValues();
-        cv.put("_id", _id);
-        cv.put("name", name);
-        cv.put("price", price);
-        cv.put("category", category);
-        cv.put("image", image);
-        cv.put("market", market);
-        id = db.insert(DATABASE_TABLE, null, cv);
-    }  // 更新記錄
-//    public void btn2_Click(View view) {
-//        int count;
-//        int id = Integer.parseInt(txtID.getText().toString());
-//        ContentValues cv = new ContentValues();
-//        cv.put("grade", Double.parseDouble(txtNewGrade.getText().toString()));
-//        count = db.update(DATABASE_TABLE, cv, "_id=" + id, null);
-//        output.setText("更新記錄成功: " + count);
-//        command.setText("UPDATE Student Set grade
-//                        ="+  txtNewGrade.getText().toString() + "WHERE id = "+
-//                txtID.getText().toString());
-//    }  // 刪除記錄
-//    public void btn3_Click(View view) {
-//        int count;
-//        int id = Integer.parseInt(txtID.getText().toString());
-//        count = db.delete(DATABASE_TABLE, "_id=" + id, null);
-//        output.setText("刪除記錄成功: " + count);
-//        command.setText("Delete From Student Where id  = "+ txtID.getText().toString());
-//    }  // 查詢所有記錄
-//    public void btn4_Click(View view) {
-//        // 查詢整個資料表
-//        SqlQuery("SELECT * FROM " + DATABASE_TABLE);
-//        command.setText("SELECT * FROM  Student");
-//    }
-//    public void btn5_Click(View view) {
-//        EditText txtSQL = (EditText) findViewById(R.id.txtSQL);
-//        // 執行輸入SQL指令的查詢
-//        SqlQuery(txtSQL.getText().toString());
-//    }
-//    // 執行SQL查詢
-//    public void SqlQuery(String sql) {
-//        String[] colNames;
-//        String str = "";
-//        Cursor c = db.rawQuery(sql, null);
-//        colNames = c.getColumnNames();
-//        // 顯示欄位名稱
-//        for (int i = 0; i < colNames.length; i++)
-//            str += colNames[i] + "\t\t";
-//        str += "\n";
-//        c.moveToFirst();  // 第1筆
-//        // 顯示欄位值
-//        for (int i = 0; i < c.getCount(); i++) {
-//            str += c.getString(0) + "\t\t";
-//            str += c.getString(1) + "\t\t";
-//            str += c.getString(2) + "\n";
-//            c.moveToNext();  // 下一筆
-//        }
-//        output.setText(str.toString());
-//    }
+        // 加入ContentValues物件包裝的新增資料
+        // 第一個參數是欄位名稱， 第二個參數是欄位的資料
+        cv.put(NAME_COLUMN, item.getName());
+        cv.put(PRICE_COLUMN, item.getPrice());
+        cv.put(CATEGORY_COLUMN, item.getCategory());
+        cv.put(IMAGE_COLUMN, item.getImage());
+        cv.put(MARKET_COLUMN, item.getMarket());
+        // 新增一筆資料並取得編號
+        // 第一個參數是表格名稱
+        // 第二個參數是沒有指定欄位值的預設值
+        // 第三個參數是包裝新增資料的ContentValues物件
+        long id = db.insert(TABLE_NAME, null, cv);
+        // 設定編號
+        item.setId(id);
+        // 回傳結果
+        return item;
+    }
+    // 修改參數指定的物件
+    public boolean update(Markets item) {
+        // 建立準備修改資料的ContentValues物件
+        ContentValues cv = new ContentValues();
+        // 加入ContentValues物件包裝的修改資料
+        // 第一個參數是欄位名稱， 第二個參數是欄位的資料
+        cv.put(NAME_COLUMN, item.getName());
+        cv.put(PRICE_COLUMN, item.getPrice());
+        cv.put(CATEGORY_COLUMN, item.getCategory());
+        cv.put(IMAGE_COLUMN, item.getImage());
+        cv.put(MARKET_COLUMN, item.getMarket());
+        // 設定修改資料的條件為編號
+        // 格式為「欄位名稱＝資料」
+        String where = KEY_ID + "=" + item.getId();
+        // 執行修改資料並回傳修改的資料數量是否成功
+        return db.update(TABLE_NAME, cv, where, null) > 0;
+    }
+    // 刪除參數指定編號的資料
+    public boolean delete(long id){
+        // 設定條件為編號，格式為「欄位名稱=資料」
+        String where = KEY_ID + "=" + id;
+        // 刪除指定編號資料並回傳刪除是否成功
+        return db.delete(TABLE_NAME, where , null) > 0;
+    }
+    // 讀取所有記事資料
+    public List<Markets> getAll() {
+        List<Markets> result = new ArrayList<Markets>();
+        //游標指向該資料表
+        Cursor cursor = db.query(TABLE_NAME, null, null, null, null, null, null, null);
+        //將所有資料轉成Item並添加進List
+        while (cursor.moveToNext()) {
+            result.add(getRecord(cursor));
+        }
+        //關閉游標
+        cursor.close();
+        return result;
+    }
+    // 取得指定編號的資料物件
+    public Markets get(long id) {
+        // 準備回傳結果用的物件
+        Markets item = null;
+        // 使用編號為查詢條件
+        String where = KEY_ID + "=" + id;
+        // 執行查詢
+        Cursor result = db.query(TABLE_NAME, null, where, null, null, null, null, null);
+        // 如果有查詢結果
+        if (result.moveToFirst()) {
+            // 讀取包裝一筆資料的物件
+            item = getRecord(result);
+        }
+        // 關閉Cursor物件
+        result.close();
+        // 回傳結果
+        return item;
+    }
+    // 把游標Cursor取得的資料轉換成目前的資料包裝為物件
+    public Markets getRecord(Cursor cursor) {
+        // 準備回傳結果用的物件
+        Markets result = new Markets();
+        result.setId(cursor.getLong(0));
+        result.setName(cursor.getString(1));
+        result.setPrice(cursor.getString(2));
+        result.setCategory(cursor.getString(3));
+        result.setImage(cursor.getString(4));
+        result.setMarket(cursor.getString(5));
+        return result;
+    }
+    // 取得資料數量
+    public int getCount() {
+        int result = 0;
+        Cursor cursor = db.rawQuery("SELECT COUNT(*) FROM " + TABLE_NAME, null);
+        if (cursor.moveToNext()) {
+            result = cursor.getInt(0);
+        }
+        return result;
+    }
+    // 建立範例資料
+    public void sample() {
+//        Markets item = new Markets(0,"test 玩家1號",null);
+//        Markets item2 = new Markets(0,"test 玩家2號","內文zxc");
+//        Markets item3 = new Markets(0,"test 玩家3號","內文asd");
+//        Markets item4 = new Markets(0,"test 玩家4號","內文qwe");
+//        insert(item);
+//        insert(item2);
+//        insert(item3);
+//        insert(item4);
+    }
 }
+
+
