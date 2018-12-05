@@ -9,6 +9,13 @@ public class Markets {
     private String market;
     public Markets(){
     }
+    public Markets(String name, String price, String category, String image, String market) {
+        this.name = name;
+        this.price = price;
+        this.category = category;
+        this.image = image;
+        this.market = market;
+    }
     public Markets(long id,String name, String price, String category, String image, String market) {
         this.id=id;
         this.name = name;

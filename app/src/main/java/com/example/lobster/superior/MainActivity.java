@@ -138,6 +138,7 @@ public class MainActivity extends AppCompatActivity
         protected void onPostExecute(String s) {
             Log.d("mycode", s);
             super.onPostExecute(s);
+            mAdapter.mMarkets.clear();
             mProgressBar.setVisibility(View.GONE);
             markets = JSONUtils.makeRepositoryList(s);
             mAdapter.mMarkets.addAll(markets);
