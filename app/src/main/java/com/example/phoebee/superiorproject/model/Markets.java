@@ -1,4 +1,5 @@
-package com.example.lobster.superior.model;
+package com.example.phoebee.superiorproject.model;
+
 
 public class Markets {
     private long id;

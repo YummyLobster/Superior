@@ -1,4 +1,4 @@
-package com.example.lobster.superior;
+package com.example.phoebee.superiorproject;
 
 import org.junit.Test;
 

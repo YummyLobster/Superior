@@ -1,13 +1,16 @@
-package com.example.lobster.superior.db;
+package com.example.phoebee.superiorproject.db;
+
 
 import java.util.ArrayList;
 import java.util.List;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.example.lobster.superior.model.Markets;
+import com.example.phoebee.superiorproject.model.Markets;
+
 
 // 資料功能類別
 public class GoodDB {
@@ -32,14 +35,17 @@ public class GoodDB {
                     MARKET_COLUMN + " TEXT NOT NULL)";
     // 資料庫物件
     private SQLiteDatabase db;
+
     // 建構子，一般的應用都不需要修改
-    public GoodDB(Context context){
+    public GoodDB(Context context) {
         db = DBHelper.getDatabase(context);
     }
+
     // 關閉資料庫，一般的應用都不需要修改
     public void close() {
         db.close();
     }
+
     // 新增參數指定的物件
     public Markets insert(Markets item) {
         // 建立準備新增資料的ContentValues物件
@@ -61,6 +67,7 @@ public class GoodDB {
         // 回傳結果
         return item;
     }
+
     // 修改參數指定的物件
     public boolean update(Markets item) {
         // 建立準備修改資料的ContentValues物件
@@ -78,13 +85,15 @@ public class GoodDB {
         // 執行修改資料並回傳修改的資料數量是否成功
         return db.update(TABLE_NAME, cv, where, null) > 0;
     }
+
     // 刪除參數指定編號的資料
-    public boolean delete(long id){
+    public boolean delete(long id) {
         // 設定條件為編號，格式為「欄位名稱=資料」
         String where = KEY_ID + "=" + id;
         // 刪除指定編號資料並回傳刪除是否成功
-        return db.delete(TABLE_NAME, where , null) > 0;
+        return db.delete(TABLE_NAME, where, null) > 0;
     }
+
     // 讀取所有記事資料
     public List<Markets> getAll() {
         List<Markets> result = new ArrayList<Markets>();
@@ -98,6 +107,7 @@ public class GoodDB {
         cursor.close();
         return result;
     }
+
     // 取得指定編號的資料物件
     public Markets get(long id) {
         // 準備回傳結果用的物件
@@ -116,6 +126,7 @@ public class GoodDB {
         // 回傳結果
         return item;
     }
+
     // 把游標Cursor取得的資料轉換成目前的資料包裝為物件
     public Markets getRecord(Cursor cursor) {
         // 準備回傳結果用的物件
@@ -128,6 +139,7 @@ public class GoodDB {
         result.setMarket(cursor.getString(5));
         return result;
     }
+
     // 取得資料數量
     public int getCount() {
         int result = 0;
@@ -137,6 +149,7 @@ public class GoodDB {
         }
         return result;
     }
+
     // 建立範例資料
     public void sample() {
 //        Markets item = new Markets(0,"test 玩家1號",null);
@@ -149,5 +162,4 @@ public class GoodDB {
 //        insert(item4);
     }
 }
-
 

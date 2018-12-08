@@ -1,6 +1,6 @@
-package com.example.lobster.superior.utilities;
+package com.example.phoebee.superiorproject.utilities;
 
-import com.example.lobster.superior.model.Markets;
+import com.example.phoebee.superiorproject.model.Markets;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -8,9 +8,15 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+
 public class JSONUtils {
 
-    public static ArrayList<Markets> makeRepositoryList(String jsonResult){
+    public static ArrayList<Markets> makeRepositoryList(String jsonResult) {
         ArrayList<Markets> repoList = new ArrayList<>();
         try {
             JSONArray jsonArray = new JSONArray(jsonResult);
@@ -21,7 +27,7 @@ public class JSONUtils {
                 String category = object.getString("Category");
                 String image = object.getString("image");
                 String market = object.getString("market");
-                repoList.add(new Markets(name,price,category,image,market));
+                repoList.add(new Markets(name, price, category, image, market));
             }
         } catch (JSONException e) {
             e.printStackTrace();

@@ -1,4 +1,5 @@
-package com.example.lobster.superior.utilities;
+package com.example.phoebee.superiorproject.utilities;
+
 
 import android.net.Uri;
 
@@ -25,17 +26,16 @@ public class NetworkUtils {
     final static String PARAM_HMart = "HMart";
 
 
-
     public static URL buildUrl(String searchQuery, String ranch99, String hmart) {
         Uri builtUri = Uri.parse(NEWS_BASE_URL).buildUpon()
-                .appendQueryParameter(PARAM_QUERY,searchQuery)
-                .appendQueryParameter(PARAM_99ranch,"1")
-                .appendQueryParameter(PARAM_HMart,"0")
+                .appendQueryParameter(PARAM_QUERY, searchQuery)
+                .appendQueryParameter(PARAM_99ranch, "1")
+                .appendQueryParameter(PARAM_HMart, "0")
                 .build();
         URL url = null;
-        try{
+        try {
             url = new URL(builtUri.toString());
-        }catch (MalformedURLException e){
+        } catch (MalformedURLException e) {
             e.printStackTrace();
         }
         return url;

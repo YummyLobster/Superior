@@ -1,4 +1,5 @@
-package com.example.lobster.superior.model;
+package com.example.phoebee.superiorproject.model;
+
 
 import android.view.View;
 

@@ -1,4 +1,4 @@
-package com.example.lobster.superior;
+package com.example.phoebee.superiorproject;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.example.lobster.superior", appContext.getPackageName());
+        assertEquals("com.example.phoebee.superiorproject", appContext.getPackageName());
     }
 }
