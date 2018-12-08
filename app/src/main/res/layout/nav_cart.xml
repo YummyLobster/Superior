@@ -6,12 +6,10 @@
     android:orientation="vertical">
 
     <TextView
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:text="cart"
-        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+        android:id="@+id/shoppinglist"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/textView2"/>
+        android:text="Test:"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
 </RelativeLayout>

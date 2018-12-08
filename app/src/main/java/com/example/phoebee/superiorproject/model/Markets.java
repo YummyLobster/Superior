@@ -4,20 +4,20 @@ package com.example.phoebee.superiorproject.model;
 public class Markets {
     private long id;
     private String name;
-    private String price;
+    private long price;
     private String category;
     private String image;
     private String market;
     public Markets(){
     }
-    public Markets(String name, String price, String category, String image, String market) {
+    public Markets(String name, long price, String category, String image, String market) {
         this.name = name;
         this.price = price;
         this.category = category;
         this.image = image;
         this.market = market;
     }
-    public Markets(long id,String name, String price, String category, String image, String market) {
+    public Markets(long id,String name, long price, String category, String image, String market) {
         this.id=id;
         this.name = name;
         this.price = price;
@@ -40,11 +40,11 @@ public class Markets {
         this.name = name;
     }
 
-    public String getPrice() {
+    public long getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(long price) {
         this.price = price;
     }
 

@@ -10,8 +10,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
+import com.example.phoebee.superiorproject.db.GoodDB;
 import com.example.phoebee.superiorproject.model.ItemClickListener;
 import com.example.phoebee.superiorproject.model.Markets;
 
@@ -77,6 +79,7 @@ public class MarketsAdapter extends RecyclerView.Adapter<MarketsAdapter.NewsHold
         TextView name;
         TextView price;
         TextView market;
+        GoodDB gooddb;
 
         public NewsHolder(View itemView) {
             super(itemView);
@@ -95,11 +98,21 @@ public class MarketsAdapter extends RecyclerView.Adapter<MarketsAdapter.NewsHold
 
         @Override
         public void onClick(View v) {
-//            String url = mMarket.get(getAdapterPosition()).getUrl();
-//
-//            Intent i = new Intent(Intent.ACTION_VIEW);
-//            i.setData(Uri.parse(url));
-//            mContext.startActivity(i);
+//            String iName = mMarkets.get(getAdapterPosition()).getName();
+//            Long iPrice = mMarkets.get(getAdapterPosition()).getPrice();
+            //String iCategory = mMarkets.get(getAdapterPosition()).getCategory();
+            //String iImage = mMarkets.get(getAdapterPosition()).getImage();
+            //String iMarket = mMarkets.get(getAdapterPosition()).getMarket();
+
+            String iName = "name";
+            Long iPrice = 123L;
+            String iCategory = "Food";
+            String iImage = "www.google.com";
+            String iMarket = "99Ranch";
+            Markets item = new Markets(iName,iPrice,iCategory,iImage,iMarket);
+            //gooddb.insert(item);
+            Toast.makeText(v.getContext(), "Add " + iName ,
+                    Toast.LENGTH_LONG).show();
         }
     }
 

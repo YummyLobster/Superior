@@ -133,7 +133,7 @@ public class GoodDB {
         Markets result = new Markets();
         result.setId(cursor.getLong(0));
         result.setName(cursor.getString(1));
-        result.setPrice(cursor.getString(2));
+        result.setPrice(cursor.getLong(2));
         result.setCategory(cursor.getString(3));
         result.setImage(cursor.getString(4));
         result.setMarket(cursor.getString(5));
@@ -152,14 +152,15 @@ public class GoodDB {
 
     // 建立範例資料
     public void sample() {
-//        Markets item = new Markets(0,"test 玩家1號",null);
-//        Markets item2 = new Markets(0,"test 玩家2號","內文zxc");
-//        Markets item3 = new Markets(0,"test 玩家3號","內文asd");
-//        Markets item4 = new Markets(0,"test 玩家4號","內文qwe");
-//        insert(item);
-//        insert(item2);
-//        insert(item3);
-//        insert(item4);
+        String iName = "Noodle1";
+        Long iPrice = 123L;
+        String iCategory = "Food";
+        String iImage = "www.google.com";
+        String iMarket = "99Ranch";
+        Markets item = new Markets(iName,iPrice,iCategory,iImage,iMarket);
+        Markets item2 = new Markets("Lobster",999L,"Seafood",iImage,iMarket);
+        insert(item);
+        insert(item2);
     }
 }
 
