@@ -22,6 +22,7 @@ public class GoodDB {
     public static final String NAME_COLUMN = "name";
     public static final String PRICE_COLUMN = "price";
     public static final String CATEGORY_COLUMN = "category";
+    public static final String AMOUNT_COLUMN = "amount";
     public static final String IMAGE_COLUMN = "image";
     public static final String MARKET_COLUMN = "market";
     // 使用上面宣告的變數建立表格的SQL指令
@@ -31,6 +32,7 @@ public class GoodDB {
                     NAME_COLUMN + " TEXT NOT NULL, " +
                     PRICE_COLUMN + " REAL NOT NULL, " +
                     CATEGORY_COLUMN + " TEXT NOT NULL, " +
+                    AMOUNT_COLUMN + " TEXT NOT NULL, " +
                     IMAGE_COLUMN + " TEXT NOT NULL, " +
                     MARKET_COLUMN + " TEXT NOT NULL)";
     // 資料庫物件
@@ -55,6 +57,7 @@ public class GoodDB {
         cv.put(NAME_COLUMN, item.getName());
         cv.put(PRICE_COLUMN, item.getPrice());
         cv.put(CATEGORY_COLUMN, item.getCategory());
+        cv.put(AMOUNT_COLUMN, item.getAmount());
         cv.put(IMAGE_COLUMN, item.getImage());
         cv.put(MARKET_COLUMN, item.getMarket());
         // 新增一筆資料並取得編號
@@ -77,8 +80,21 @@ public class GoodDB {
         cv.put(NAME_COLUMN, item.getName());
         cv.put(PRICE_COLUMN, item.getPrice());
         cv.put(CATEGORY_COLUMN, item.getCategory());
+        cv.put(AMOUNT_COLUMN, item.getAmount());
         cv.put(IMAGE_COLUMN, item.getImage());
         cv.put(MARKET_COLUMN, item.getMarket());
+        // 設定修改資料的條件為編號
+        // 格式為「欄位名稱＝資料」
+        String where = KEY_ID + "=" + item.getId();
+        // 執行修改資料並回傳修改的資料數量是否成功
+        return db.update(TABLE_NAME, cv, where, null) > 0;
+    }
+    public boolean updateAmount(Markets item) {
+        // 建立準備修改資料的ContentValues物件
+        ContentValues cv = new ContentValues();
+        // 加入ContentValues物件包裝的修改資料
+        // 第一個參數是欄位名稱， 第二個參數是欄位的資料
+        cv.put(AMOUNT_COLUMN, item.getAmount());
         // 設定修改資料的條件為編號
         // 格式為「欄位名稱＝資料」
         String where = KEY_ID + "=" + item.getId();
@@ -135,8 +151,9 @@ public class GoodDB {
         result.setName(cursor.getString(1));
         result.setPrice(cursor.getDouble(2));
         result.setCategory(cursor.getString(3));
-        result.setImage(cursor.getString(4));
-        result.setMarket(cursor.getString(5));
+        result.setAmount(cursor.getInt(4));
+        result.setImage(cursor.getString(5));
+        result.setMarket(cursor.getString(6));
         return result;
     }
 
@@ -150,17 +167,5 @@ public class GoodDB {
         return result;
     }
 
-    // 建立範例資料
-    public void sample() {
-        String iName = "Noodle1";
-        float iPrice = 123;
-        String iCategory = "Food";
-        String iImage = "www.google.com";
-        String iMarket = "99Ranch";
-        Markets item = new Markets(iName,iPrice,iCategory,iImage,iMarket);
-        Markets item2 = new Markets("Lobster",999L,"Seafood",iImage,iMarket);
-        insert(item);
-        insert(item2);
-    }
 }
 
