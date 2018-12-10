@@ -23,7 +23,7 @@ public class JSONUtils {
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject object = jsonArray.getJSONObject(i);
                 String name = object.getString("name");
-                Long price = object.getLong("price");
+                Double price = object.getDouble("price");
                 String category = object.getString("Category");
                 String image = object.getString("image");
                 String market = object.getString("market");

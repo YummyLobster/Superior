@@ -2,8 +2,6 @@ package com.example.phoebee.superiorproject;
 
 
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -79,7 +77,6 @@ public class MarketsAdapter extends RecyclerView.Adapter<MarketsAdapter.NewsHold
         TextView name;
         TextView price;
         TextView market;
-        GoodDB gooddb;
 
         public NewsHolder(View itemView) {
             super(itemView);
@@ -92,25 +89,22 @@ public class MarketsAdapter extends RecyclerView.Adapter<MarketsAdapter.NewsHold
         void bind(int listIndex) {
             name.setText("Name: " + mMarkets.get(listIndex).getName());
             price.setText("Price: " + mMarkets.get(listIndex).getPrice());
-            market.setText("Market: " + mMarkets.get(listIndex).getMarket());
+            market.setText("Market: " + mMarkets.get(listIndex).getMarket().toString());
 
         }
 
         @Override
         public void onClick(View v) {
-//            String iName = mMarkets.get(getAdapterPosition()).getName();
-//            Long iPrice = mMarkets.get(getAdapterPosition()).getPrice();
-            //String iCategory = mMarkets.get(getAdapterPosition()).getCategory();
-            //String iImage = mMarkets.get(getAdapterPosition()).getImage();
-            //String iMarket = mMarkets.get(getAdapterPosition()).getMarket();
+            String iName = mMarkets.get(getAdapterPosition()).getName();
+            double iPrice = mMarkets.get(getAdapterPosition()).getPrice();
+            String iCategory = mMarkets.get(getAdapterPosition()).getCategory();
+            String iImage = mMarkets.get(getAdapterPosition()).getImage();
+            String iMarket = mMarkets.get(getAdapterPosition()).getMarket();
 
-            String iName = "name";
-            Long iPrice = 123L;
-            String iCategory = "Food";
-            String iImage = "www.google.com";
-            String iMarket = "99Ranch";
             Markets item = new Markets(iName,iPrice,iCategory,iImage,iMarket);
-            //gooddb.insert(item);
+
+            GoodDB gooddb = new GoodDB(v.getContext());
+            gooddb.insert(item);
             Toast.makeText(v.getContext(), "Add " + iName ,
                     Toast.LENGTH_LONG).show();
         }

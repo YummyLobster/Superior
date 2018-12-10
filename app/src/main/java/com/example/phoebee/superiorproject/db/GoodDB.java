@@ -29,7 +29,7 @@ public class GoodDB {
             "CREATE TABLE " + TABLE_NAME + " (" +
                     KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     NAME_COLUMN + " TEXT NOT NULL, " +
-                    PRICE_COLUMN + " INTEGER NOT NULL, " +
+                    PRICE_COLUMN + " REAL NOT NULL, " +
                     CATEGORY_COLUMN + " TEXT NOT NULL, " +
                     IMAGE_COLUMN + " TEXT NOT NULL, " +
                     MARKET_COLUMN + " TEXT NOT NULL)";
@@ -133,7 +133,7 @@ public class GoodDB {
         Markets result = new Markets();
         result.setId(cursor.getLong(0));
         result.setName(cursor.getString(1));
-        result.setPrice(cursor.getLong(2));
+        result.setPrice(cursor.getDouble(2));
         result.setCategory(cursor.getString(3));
         result.setImage(cursor.getString(4));
         result.setMarket(cursor.getString(5));
@@ -153,7 +153,7 @@ public class GoodDB {
     // 建立範例資料
     public void sample() {
         String iName = "Noodle1";
-        Long iPrice = 123L;
+        float iPrice = 123;
         String iCategory = "Food";
         String iImage = "www.google.com";
         String iMarket = "99Ranch";
