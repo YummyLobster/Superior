@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -14,6 +15,7 @@ import android.widget.Toast;
 import com.example.phoebee.superiorproject.db.GoodDB;
 import com.example.phoebee.superiorproject.model.ItemClickListener;
 import com.example.phoebee.superiorproject.model.Markets;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -77,19 +79,26 @@ public class MarketsAdapter extends RecyclerView.Adapter<MarketsAdapter.NewsHold
         TextView name;
         TextView price;
         TextView market;
+        ImageView image;
 
         public NewsHolder(View itemView) {
             super(itemView);
             name = (TextView) itemView.findViewById(R.id.title);
             price = (TextView) itemView.findViewById(R.id.description);
             market = (TextView) itemView.findViewById(R.id.publishedAt);
+            image = (ImageView) itemView.findViewById(R.id.image);
             itemView.setOnClickListener(this);
         }
 
         void bind(int listIndex) {
-            name.setText("Name: " + mMarkets.get(listIndex).getName());
-            price.setText("Price: " + mMarkets.get(listIndex).getPrice());
-            market.setText("Market: " + mMarkets.get(listIndex).getMarket().toString());
+            //Use Picasso to load the image located at "urlToImage" in each RecyclerView Item
+            String imageUrl = mMarkets.get(listIndex).getImage();
+            if (imageUrl != null) {
+                Picasso.get().load(imageUrl).into(image);
+            }
+            name.setText(mMarkets.get(listIndex).getName());
+            price.setText("$ " + mMarkets.get(listIndex).getPrice());
+            market.setText(mMarkets.get(listIndex).getMarket());
 
         }
 

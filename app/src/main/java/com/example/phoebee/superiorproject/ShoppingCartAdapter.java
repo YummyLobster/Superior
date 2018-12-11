@@ -55,6 +55,7 @@ public class ShoppingCartAdapter extends RecyclerView.Adapter<ShoppingCartAdapte
             @Override
             public void onClick(View v) {
                 itemDeleteClickListener.onItemDeleteClick(v, goods);
+                mGoodsList.remove(position);
             }
         });
         holder.ib_goods_add.setOnClickListener(new View.OnClickListener() {

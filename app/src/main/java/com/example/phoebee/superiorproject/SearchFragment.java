@@ -13,6 +13,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -43,6 +44,13 @@ public class SearchFragment extends Fragment {
     private Button mBtnSearch;
     private ArrayList<Markets> markets = new ArrayList<>();
 
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState){
+        super.onViewCreated(view, savedInstanceState);
+
+        getActivity().setTitle("Search");
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState){
@@ -67,9 +75,10 @@ public class SearchFragment extends Fragment {
         });
 
 
-        mGoodList.setLayoutManager(new LinearLayoutManager(getActivity()));
+        //mGoodList.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mGoodList.setLayoutManager(new GridLayoutManager(getActivity(), 2));
 
-        mGoodList.setHasFixedSize(true);
+        //mGoodList.setHasFixedSize(true);
 
         mAdapter = new MarketsAdapter(this, markets);
         mGoodList.setAdapter(mAdapter);
@@ -108,7 +117,7 @@ public class SearchFragment extends Fragment {
 
         @Override
         protected void onPostExecute(String s) {
-            Log.d("myJSON", s);
+            //Log.d("myJSON", s);
             super.onPostExecute(s);
             mAdapter.mMarkets.clear();
             mProgressBar.setVisibility(View.GONE);

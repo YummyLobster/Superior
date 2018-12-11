@@ -29,8 +29,8 @@ public class NetworkUtils {
     public static URL buildUrl(String searchQuery, String ranch99, String hmart) {
         Uri builtUri = Uri.parse(NEWS_BASE_URL).buildUpon()
                 .appendQueryParameter(PARAM_QUERY, searchQuery)
-                .appendQueryParameter(PARAM_99ranch, "1")
-                .appendQueryParameter(PARAM_HMart, "0")
+                .appendQueryParameter(PARAM_99ranch, ranch99)
+                .appendQueryParameter(PARAM_HMart, hmart)
                 .build();
         URL url = null;
         try {
