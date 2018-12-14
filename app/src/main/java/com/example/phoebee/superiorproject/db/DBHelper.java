@@ -10,7 +10,7 @@ public class DBHelper extends SQLiteOpenHelper {
     // 資料庫名稱
     public static final String DATABASE_NAME = "mydata.db";
     // 資料庫版本，資料結構改變的時候要更改這個數字，通常是加一
-    public static int VERSION = 1;
+    public static int VERSION = 3;
     // 資料庫物件，固定的欄位變數
     private static SQLiteDatabase database;
 
@@ -28,6 +28,7 @@ public class DBHelper extends SQLiteOpenHelper {
         // 1. SQL語法不分大小寫
         // 2. 這裡大寫代表的是SQL標準語法, 小寫字是資料表/欄位的命名
         // 建立應用程式需要的表格
+        db.execSQL(HistoryDB.CREATE_TABLE);
         db.execSQL(GoodDB.CREATE_TABLE);
     }
 
@@ -37,6 +38,7 @@ public class DBHelper extends SQLiteOpenHelper {
         // TODO Auto-generated method stub
         // 刪除原有的表格
         db.execSQL("DROP TABLE IF EXISTS " + GoodDB.TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + HistoryDB.TABLE_NAME);
         // 呼叫onCreate建立新版的表格
         onCreate(db);
     }

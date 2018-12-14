@@ -16,9 +16,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.phoebee.superiorproject.db.GoodDB;
+import com.example.phoebee.superiorproject.db.HistoryDB;
+import com.example.phoebee.superiorproject.model.History;
 import com.example.phoebee.superiorproject.model.Markets;
-import com.example.phoebee.superiorproject.db.NoteLitepal;
-import com.example.phoebee.superiorproject.model.Note;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -34,7 +34,6 @@ public class CartFragment extends Fragment  implements ShoppingCartAdapter.OnRec
     private Button confirmButton;
     private TextView Sub, Total;
     private ShoppingCartAdapter adapter;
-    private String testMarketImageUrl = "https://cdn.iconscout.com/icon/free/png-256/costco-282448.png";
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState){
@@ -60,7 +59,7 @@ public class CartFragment extends Fragment  implements ShoppingCartAdapter.OnRec
         Total = view.findViewById(R.id.Total);
         confirmButton = view.findViewById(R.id.confirm);
 
-        name.setText("Cart");
+        name.setText("List");
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
         LinearLayoutManager layoutManager = new
                 LinearLayoutManager(getActivity());
@@ -84,8 +83,24 @@ public class CartFragment extends Fragment  implements ShoppingCartAdapter.OnRec
         confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                NoteLitepal.createNewNote(new Note(name.getText().toString(), date2string(new Date()), Total.getText().toString()));
+                HistoryDB history_list=new HistoryDB(view.getContext());
+                int history_amount = history_list.getCount()+1;
+                History history = new History((long) history_amount,name.getText().toString());
+                history_list.insert(history);
+
+                GoodDB test=new GoodDB(view.getContext());
+                List<Markets> items=test.getAll();
+
+                for (int i = 0; i < items.size(); i++) {
+                   test.updateHistory(items.get(i),history_amount);
+                }
+                Sub.setText("Sub Total: $0");
+                Total.setText("Total: $0");
+                adapter.clearall();
+                adapter.notifyDataSetChanged();
                 Toast.makeText(getActivity(), "success!", Toast.LENGTH_SHORT).show();
+                test.close();
+                history_list.close();
             }
         });
 
@@ -137,10 +152,4 @@ public class CartFragment extends Fragment  implements ShoppingCartAdapter.OnRec
         test.close();
     }
 
-    public static String date2string(Date date) {//return當前時間
-        String strDate = "";
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日 HH:mm");
-        strDate = sdf.format(date);
-        return strDate;
-    }
 }

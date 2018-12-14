@@ -27,7 +27,7 @@
 
         <TextView
             android:id="@+id/goods_name"
-            android:layout_width="0dp"
+            android:layout_width="30dp"
             android:layout_height="match_parent"
             android:layout_weight="1.0"
             android:gravity="center"
@@ -38,7 +38,7 @@
 
         <ImageButton
             android:id="@+id/goods_reduce"
-            android:layout_width="50dp"
+            android:layout_width="20dp"
             android:layout_height="match_parent"
             android:layout_marginLeft="10dp"
             android:background="@null"
@@ -58,19 +58,13 @@
 
         <ImageButton
             android:id="@+id/goods_add"
-            android:layout_width="50dp"
+            android:layout_width="20dp"
             android:layout_height="match_parent"
             android:layout_marginRight="10dp"
             android:background="@null"
             android:scaleType="centerInside"
             android:src="@drawable/ic_add" />
 
-
-        <ImageView
-            android:id="@+id/market_image"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1.0" />
 
 
         <TextView

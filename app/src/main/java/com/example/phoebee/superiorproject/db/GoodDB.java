@@ -25,6 +25,7 @@ public class GoodDB {
     public static final String AMOUNT_COLUMN = "amount";
     public static final String IMAGE_COLUMN = "image";
     public static final String MARKET_COLUMN = "market";
+    public static final String HISTORY_COLUMN = "history_id";
     // 使用上面宣告的變數建立表格的SQL指令
     public static final String CREATE_TABLE =
             "CREATE TABLE " + TABLE_NAME + " (" +
@@ -34,7 +35,8 @@ public class GoodDB {
                     CATEGORY_COLUMN + " TEXT NOT NULL, " +
                     AMOUNT_COLUMN + " TEXT NOT NULL, " +
                     IMAGE_COLUMN + " TEXT NOT NULL, " +
-                    MARKET_COLUMN + " TEXT NOT NULL)";
+                    MARKET_COLUMN + " TEXT NOT NULL, " +
+                    HISTORY_COLUMN + " INTEGER)";
     // 資料庫物件
     private SQLiteDatabase db;
 
@@ -101,6 +103,18 @@ public class GoodDB {
         // 執行修改資料並回傳修改的資料數量是否成功
         return db.update(TABLE_NAME, cv, where, null) > 0;
     }
+    public boolean updateHistory(Markets item, int history_id) {
+        // 建立準備修改資料的ContentValues物件
+        ContentValues cv = new ContentValues();
+        // 加入ContentValues物件包裝的修改資料
+        // 第一個參數是欄位名稱， 第二個參數是欄位的資料
+        cv.put(HISTORY_COLUMN, history_id);
+        // 設定修改資料的條件為編號
+        // 格式為「欄位名稱＝資料」
+        String where = KEY_ID + "=" + item.getId();
+        // 執行修改資料並回傳修改的資料數量是否成功
+        return db.update(TABLE_NAME, cv, where, null) > 0;
+    }
 
     // 刪除參數指定編號的資料
     public boolean delete(long id) {
@@ -113,8 +127,9 @@ public class GoodDB {
     // 讀取所有記事資料
     public List<Markets> getAll() {
         List<Markets> result = new ArrayList<Markets>();
+        String where = HISTORY_COLUMN + " IS NULL";
         //游標指向該資料表
-        Cursor cursor = db.query(TABLE_NAME, null, null, null, null, null, null, null);
+        Cursor cursor = db.query(TABLE_NAME, null, where, null, null, null, null, null);
         //將所有資料轉成Item並添加進List
         while (cursor.moveToNext()) {
             result.add(getRecord(cursor));
@@ -142,6 +157,19 @@ public class GoodDB {
         // 回傳結果
         return item;
     }
+    public List<Markets> getHistory(int id) {
+        List<Markets> result = new ArrayList<Markets>();
+        String where = HISTORY_COLUMN + "=" + id;
+        //游標指向該資料表
+        Cursor cursor = db.query(TABLE_NAME, null, where, null, null, null, null, null);
+        //將所有資料轉成Item並添加進List
+        while (cursor.moveToNext()) {
+            result.add(getRecord(cursor));
+        }
+        //關閉游標
+        cursor.close();
+        return result;
+    }
 
     // 把游標Cursor取得的資料轉換成目前的資料包裝為物件
     public Markets getRecord(Cursor cursor) {
@@ -154,6 +182,7 @@ public class GoodDB {
         result.setAmount(cursor.getInt(4));
         result.setImage(cursor.getString(5));
         result.setMarket(cursor.getString(6));
+        //result.setHistory_id(cursor.getInt(7));
         return result;
     }
 

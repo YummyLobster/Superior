@@ -2,6 +2,8 @@ package com.example.phoebee.superiorproject;
 
 
 
+import android.content.Context;
+import android.media.Image;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -27,6 +29,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -54,11 +57,8 @@ public class SearchFragment extends Fragment {
     private String hmart="0", ranch99="0";
 
 
-
     //display all products
     private ArrayList<Markets> markets = new ArrayList<>();
-    //display products in certain market
-    private ArrayList<Markets> filterMarket = new ArrayList<>();
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState){
@@ -72,6 +72,10 @@ public class SearchFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState){
 
         View view = inflater.inflate(R.layout.nav_search, container, false);
+
+        //ImageView mFrontImage = (ImageView) view.findViewById(R.id.frontImage);
+        //mFrontImage.setVisibility(View.GONE);
+
 
 
         mSearchBoxEditText = (EditText) view.findViewById(R.id.et_search_box);

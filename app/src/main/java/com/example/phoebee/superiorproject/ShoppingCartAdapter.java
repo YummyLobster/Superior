@@ -49,7 +49,7 @@ public class ShoppingCartAdapter extends RecyclerView.Adapter<ShoppingCartAdapte
         holder.tv_goods_number.setText(String.valueOf(goods.getAmount()));
         holder.tv_goods_price.setText("$" + goods.getPrice());
 
-        Glide.with(mContext).load(goods.getMarkeImageUrl()).into(holder.iv_market_image);
+        //Glide.with(mContext).load(goods.getMarkeImageUrl()).into(holder.iv_market_image);
 
         holder.ib_goods_delete.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,7 +94,9 @@ public class ShoppingCartAdapter extends RecyclerView.Adapter<ShoppingCartAdapte
 
         void onItemReduceClick(View view, Markets goods);
     }
-
+    public void clearall(){
+        mGoodsList.clear();
+    }
 
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -111,7 +113,6 @@ public class ShoppingCartAdapter extends RecyclerView.Adapter<ShoppingCartAdapte
             super(view);
             tv_goods_order = (TextView) view.findViewById(R.id.goods_order);
             tv_goods_name = (TextView) view.findViewById(R.id.goods_name);
-            iv_market_image = (ImageView) view.findViewById(R.id.market_image);
             tv_goods_number = (TextView) view.findViewById(R.id.goods_number);
             tv_goods_price = (TextView) view.findViewById(R.id.goods_price);
             ib_goods_delete = (ImageButton) view.findViewById(R.id.goods_delete);

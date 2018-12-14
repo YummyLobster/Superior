@@ -11,7 +11,7 @@ public class Markets implements Serializable {
     private String image;
     private String market;
     private int amount;
-    private String marketImageUrl;
+    private int history_id;
     public Markets(){
     }
     public Markets(String name, double price, String category, String image, String market) {
@@ -21,6 +21,7 @@ public class Markets implements Serializable {
         this.image = image;
         this.market = market;
         this.amount = 1;
+        this.history_id = 0;
     }
     public Markets(long id,String name, double price, String category, String image, String market) {
         this.id=id;
@@ -31,12 +32,22 @@ public class Markets implements Serializable {
         this.market = market;
         this.amount = 1;
     }
-    public Markets(String name, String amount, double price, String market, String marketImageUrl) {
+    public Markets(String name, double price, String category, String image, String market, int amount,int history_id) {
+        this.history_id = history_id;
         this.name = name;
-        this.amount = 1;
         this.price = price;
+        this.category = category;
+        this.image = image;
         this.market = market;
-        this.marketImageUrl = marketImageUrl;
+        this.amount = amount;
+    }
+
+    public int getHistory_id() {
+        return history_id;
+    }
+
+    public void setHistory_id(int history_id) {
+        this.history_id = history_id;
     }
 
     public void setId(long id){
@@ -93,11 +104,4 @@ public class Markets implements Serializable {
         this.amount = amount;
     }
 
-    public String getMarkeImageUrl() {
-        return marketImageUrl;
-    }
-
-    public void setMarkeImageUrl(String marketImageUrl) {
-        this.marketImageUrl = marketImageUrl;
-    }
 }

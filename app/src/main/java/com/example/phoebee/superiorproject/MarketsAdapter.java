@@ -61,6 +61,7 @@ public class MarketsAdapter extends RecyclerView.Adapter<MarketsAdapter.NewsHold
         boolean shouldAttachToParentImmediately = false;
 
         View view = inflater.inflate(R.layout.list_item, parent, shouldAttachToParentImmediately);
+
         NewsHolder viewHolder = new NewsHolder(view);
         return viewHolder;
     }

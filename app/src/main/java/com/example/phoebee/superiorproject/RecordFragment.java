@@ -8,35 +8,48 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.TextView;
 
-import com.example.phoebee.superiorproject.db.NoteLitepal;
-import com.example.phoebee.superiorproject.model.Note;
+import com.example.phoebee.superiorproject.db.GoodDB;
+import com.example.phoebee.superiorproject.db.HistoryDB;
+import com.example.phoebee.superiorproject.model.History;
+import com.example.phoebee.superiorproject.model.Markets;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class RecordFragment extends Fragment {
 
-    private List<Note> noteList = new ArrayList<Note>();
-    private RecordAdapter adapter;
+    private HistoryAdapter adapter;
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        getActivity().setTitle("Record");
+        getActivity().setTitle("History");
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.nav_record, container, false);
-        RecyclerView recyclerView = view.findViewById(R.id.record_recycler);
+
+        // 建立資料庫物件
+        HistoryDB historyDB=new HistoryDB(view.getContext());
+
+        // 取得所有記事資料
+        List<History>history=historyDB.getAll();
+
+        RecyclerView recyclerView = view.findViewById(R.id.history_recycler);
         LinearLayoutManager layoutManager = new
                 LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
-        noteList = NoteLitepal.queryNoteAll();
-        adapter = new RecordAdapter(getActivity(), noteList);
+        adapter = new HistoryAdapter(getActivity(), history);
         recyclerView.setAdapter(adapter);
+
+        historyDB.close();
         return view;
     }
 
