@@ -23,8 +23,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.ImageButton;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.example.phoebee.superiorproject.model.Markets;
 import com.example.phoebee.superiorproject.utilities.JSONUtils;
@@ -41,8 +45,20 @@ public class SearchFragment extends Fragment {
     private ProgressBar mProgressBar;
     private MarketsAdapter mAdapter;
     private RecyclerView mGoodList;
-    private Button mBtnSearch;
+
+    private CheckBox mCbRanch99;
+    private CheckBox mCbHmart;
+
+
+    private ImageButton mBtnSearch;
+    private String hmart="0", ranch99="0";
+
+
+
+    //display all products
     private ArrayList<Markets> markets = new ArrayList<>();
+    //display products in certain market
+    private ArrayList<Markets> filterMarket = new ArrayList<>();
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState){
@@ -62,8 +78,30 @@ public class SearchFragment extends Fragment {
         mProgressBar = (ProgressBar) view.findViewById(R.id.progress);
         mGoodList = (RecyclerView)view.findViewById(R.id.rv_numbers);
 
+        //initiate a checkbox
+        mCbRanch99 = (CheckBox) view.findViewById(R.id.checkbox_ranch99);
+        mCbHmart = (CheckBox) view.findViewById(R.id.checkbox_hmart);
 
-        mBtnSearch = (Button) view.findViewById(R.id.btn_search);
+
+        mCbRanch99.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked)ranch99="1";
+                else ranch99="0";
+            }
+        });
+
+
+        mCbHmart.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked)hmart="1";
+                else hmart="0";
+            }
+        });
+
+
+        mBtnSearch = (ImageButton) view.findViewById(R.id.btn_search);
 
         mBtnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,7 +127,7 @@ public class SearchFragment extends Fragment {
 
     private URL makeGithubSearchQuery() {
         String githubQuery = mSearchBoxEditText.getText().toString();
-        URL githubSearchUrl = NetworkUtils.buildUrl(githubQuery, "1", "0");
+        URL githubSearchUrl = NetworkUtils.buildUrl(githubQuery, ranch99, hmart);
         String urlString = githubSearchUrl.toString();
         Log.d("myURL", urlString);
         return githubSearchUrl;
@@ -126,4 +164,6 @@ public class SearchFragment extends Fragment {
             mAdapter.notifyDataSetChanged();
         }
     }
+
+
 }
